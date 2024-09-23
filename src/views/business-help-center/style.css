@@ -314,7 +314,7 @@
 }
 
 .css-dev-only-do-not-override-11xg00t.ant-form-item .ant-form-item-label>label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::before {
-    display: none;
+    /* display: none; */
     margin-inline-end: 4px;
     color: #ff4d4f;
     font-size: 14px;
